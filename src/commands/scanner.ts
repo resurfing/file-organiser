@@ -5,12 +5,11 @@ import { basename, extname, resolve } from "node:path";
 import type { Command } from "commander";
 import type { FileEntry } from "~/types/entry";
 
-function scanDirectory(
-    path: string,
-    recursive: boolean = false,
-): FileEntry[] {
+import { classifyFile } from "~/lib/classifier";
+
+function scanDirectory(path: string, recursive: boolean = false): FileEntry[] {
     let stats;
-    
+
     try {
         stats = statSync(path);
     } catch {
@@ -29,11 +28,11 @@ function scanDirectory(
             onlyFiles: true,
         }),
     );
-    
+
     const files: FileEntry[] = paths.map((filePath) => {
         const fullPath = resolve(path, filePath);
         const stats = statSync(fullPath);
-    
+
         return {
             path: fullPath,
             name: basename(filePath),
@@ -59,7 +58,11 @@ export function registerScanCommand(program: Command) {
                 console.log(`Found ${files.length} files:\n`);
 
                 for (const file of files) {
-                    console.log(`  ${file.name} | ${file.path}`);
+                    const classification = classifyFile(file);
+
+                    console.log(
+                        `- ${file.name} → ${classification.destination}`,
+                    );
                 }
             } catch (error) {
                 console.error(
