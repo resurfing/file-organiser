@@ -1,7 +1,7 @@
 import type { FileEntry } from "~/types/entry";
 import type { FileCategory } from "~/types/constants";
 
-import { FileCategories } from "~/types/constants";
+import { fileCategories } from "~/types/constants";
 
 export type Classification = {
     file: FileEntry;
@@ -11,7 +11,7 @@ export type Classification = {
 
 export function classifyFile(file: FileEntry): Classification {
     const extension = file.extension.toLowerCase();
-    const category = FileCategories[extension];
+    const category = fileCategories[extension];
 
     return {
         file,

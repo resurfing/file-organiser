@@ -18,7 +18,7 @@ export type FileCategory =
     | "Backups"
     | "Logs";
 
-export const FileCategories: Record<string, FileCategory> = {
+export const fileCategories: Record<string, FileCategory> = {
     // Images
     ".jpg": "Images",
     ".jpeg": "Images",
