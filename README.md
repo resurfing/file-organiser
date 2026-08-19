@@ -1,3 +1,5 @@
+This needs actual "organise" logic, not finished right now.
+
 # file-organiser
 
 To install dependencies:
